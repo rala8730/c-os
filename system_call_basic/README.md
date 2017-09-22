@@ -24,14 +24,30 @@ This file is ued to check the message from system call. we can use dmesg too.(no
 
 
 Run:
-step1. After adding require line in files and adding simple_add.c file except the test and compile the kernel by following command on your terminal.
+
+step1. 
+
+After adding require line in files and adding simple_add.c file except the test and compile the kernel by following command on your terminal.
+
 	sudo make -j2 CC="ccache gcc"
+	
 	sudo make -j2 modules_install
+	
 	sudo make -j2 install
+	
 	sudo reboot
-step2. Add the test file and run it by following command on your terminal.
+	
+	
+step2.
+
+Add the test file and run it by following command on your terminal.
+
 	gcc test.c
+	
 	./a.out
+	
+	
 step3:
+
 	dmesg/ got to syslog to see if you did it correctly. If the message is print you did it.
 
