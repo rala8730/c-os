@@ -1,6 +1,9 @@
 CSCI 3753 OPERATING SYSTEM
+
 PROGRAMMING ASSIGNMENT 1
+
 NAME:RASMI LAMICHHANE
+
 EMAIL:rala8730@colorado.edi
 
 a. arch/x86/kernel/simple_add.c
