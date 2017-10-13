@@ -1,18 +1,18 @@
-
-
 #include<linux/init.h>
 #include<linux/module.h>
 
 int hello_init(void)
 {
 	printk(KERN_ALERT "inside %s function\n",__FUNCTION__);
+	//printk(KERN_ALERT "init print\n");
 	return 0;
 }
 
-int hello_exit(void)
+void hello_exit(void)
 {
 	printk(KERN_ALERT "inside %s function\n",__FUNCTION__);
-	return 0;
+	//printk(KERN_ALERT "exit print\n");
+	//return 0;
 }
 //execute when the module starts to work 
 module_init(hello_init);
