@@ -2,6 +2,17 @@
 #include<stdlib.h>
 #include "multi-lookup.h"
 
+copyfile(char source[], char dest[]){
+  int c;
+  FILE *f1 = fopen(source, "r");
+  FILE *f2 = fopen(dest, "w");
+  while((c = fgetc(f1)) != EOF){
+    fputc(c, f2);
+  }
+  fclose(f1);
+  fclose(f2);
+}
+
 void resolver_func(){
     
     
@@ -40,6 +51,8 @@ int main(int argc, char **argv ){
     */
      //pthread_t resolver, requester;
     
+    //test copy
+    copyfile(argv[5],"copytest.txt");    
     
     
     return 0;
