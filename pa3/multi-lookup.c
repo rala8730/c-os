@@ -31,12 +31,15 @@ int main(int argc, char **argv ){
     printf("%s \n",argv[9]);//name5.txt
     
     //read from the file
+    /*
     FILE *fp;
     fp=open(argv[5],"r");
     fprint(fp, "testing fprint");
     fputs("testing fputs", fp);
     fclose(fp);
-    //pthread_t resolver, requester;
+    */
+     //pthread_t resolver, requester;
+    
     
     
     return 0;
