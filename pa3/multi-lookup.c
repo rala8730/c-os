@@ -1,11 +1,37 @@
-#include<stdio.h>
-#include<stdlib.h>
 #include "multi-lookup.h"
 
-copyfile(char source[], char dest[]){
+void* reqhelp(){
+  pthread_mutex_lock(&hostLock);
+  FILE *f  = fopen(source, "r");
+  FILE *fp = fopen("temp.txt", "w");
+  int dLine = 1;
+  int lineN = 0;
   int c;
-  FILE *f1 = fopen(source, "r");
-  FILE *f2 = fopen(dest, "w");
+  char test;
+  rewind(f);
+  while((c = fgetc(f)) != EOF){
+    if(c == '\n'){
+      lineN++;
+    }
+    if(lineN != dLine){
+      fputc(c, fp);
+    }else{
+      test = test + c;
+      printf("%c",c);
+    }
+  }
+  fclose(f);
+  fclose(fp);
+  remove(source);
+  rename("temp.txt", source);
+  pthread_mutex_unlock(&hostLock);
+  printf("%c \n",test);
+}
+
+void copyfile(char file[]){
+  int c;
+  FILE *f1 = fopen(file, "r");
+  FILE *f2 = fopen(source, "w");
   while((c = fgetc(f1)) != EOF){
     fputc(c, f2);
   }
@@ -13,14 +39,27 @@ copyfile(char source[], char dest[]){
   fclose(f2);
 }
 
-void resolver_func(){
-    
-    
+void resolver_func(int thrds){
+        
 }
 
-void requester_func(){
-    
-    
+void requester_func(int thrds){
+  pthread_t tid[thrds];
+  int i = 0;
+  int err;
+  while (i <thrds){
+    err = pthread_create(&(tid[i]), NULL, &reqhelp, NULL);
+    if(err !=0){
+      printf("err requester_func");
+    }
+    i++;
+  }
+  i=0;
+  while(i < thrds){
+    pthread_join(tid[i],NULL);
+    i++;
+  }
+  pthread_mutex_destroy(&hostLock);
 }
 
 /*
@@ -32,7 +71,9 @@ void requester_func(){
 int main(int argc, char **argv ){
     //printing the argument
     printf("%s \n",argv[1]);//num of requester thread
+    int reqThrds = *argv[1];
     printf("%s \n",argv[2]);//num of resolver thread
+    int resThrds = *argv[2];
     printf("%s \n",argv[3]);//result.txt
     printf("%s \n",argv[4]);//service.txt
     printf("%s \n",argv[5]);//name1.txt
@@ -52,8 +93,9 @@ int main(int argc, char **argv ){
      //pthread_t resolver, requester;
     
     //test copy
-    copyfile(argv[5],"copytest.txt");    
-    
+
+    copyfile(argv[5]);    
+    requester_func(reqThrds);
     
     return 0;
 }
